@@ -42,7 +42,7 @@ export default function RegisterPage() {
         </div>
       )}
       {error && (
-        <div className="my-4 text-center text-red-700">
+        <div className="my-4 text-center text-red-800">
           Error creating user.{" "}
         </div>
       )}
