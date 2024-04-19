@@ -71,7 +71,14 @@ export default function RegisterPage() {
           }}
         />
         {JSON.stringify(password)}
-        <button type="submit" disabled={creatingUser}>
+        <button
+          type="submit"
+          disabled={creatingUser}
+          onClick={() => {
+            setUserCreated(false);
+            setError(false);
+          }}
+        >
           Register
         </button>
         <div className=" my-4 text-center text-gray-500">
@@ -83,7 +90,7 @@ export default function RegisterPage() {
         </button>
         <div className=" text-center my-4 text-gray-500 border-t pt-4">
           Already have an account?{" "}
-          <Link className=" underline" href={"/href"}>
+          <Link className=" underline" href={"/login"}>
             Login here &raquo;
           </Link>
         </div>
