@@ -1,24 +1,51 @@
 import { User } from "@/app/models/user";
-import { registerSchema } from "@/utils/zod";
+import { RegisterType, registerSchema } from "@/utils/zod";
+import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  console.log(body);
-  console.log(process.env.MONGO_URL);
-  if (!process.env.MONGO_URL) {
-    console.log("no url");
-    return;
+  try {
+    const body: RegisterType = await req.json();
+    console.log(body);
+    console.log(process.env.MONGO_URL);
+    // Check the database
+    if (!process.env.MONGO_URL) {
+      console.log("Server Down(no url)");
+      return;
+    }
+    // zod validation for signup
+    const { success } = registerSchema.safeParse(body);
+    console.log(success);
+    if (!success) {
+      return NextResponse.json(
+        { message: "Incorrect Inputs" },
+        { status: 401 }
+      );
+    }
+    // Check if user already exists
+    const user1 = await User.findOne({ email: body.email });
+    console.log(user1);
+    if (user1) {
+      return NextResponse.json(
+        { message: "User already exists" },
+        { status: 400 }
+      );
+    }
+
+    // encrypt the password
+    const hashedPassword = await bcrypt.hash(body.password, 10);
+    console.log("hashedPassword", hashedPassword);
+
+    // Create a user
+    mongoose.connect(process.env.MONGO_URL);
+    const createdUser: any = await User.create({
+      email: body.email,
+      password: hashedPassword,
+    });
+    return NextResponse.json({ message: createdUser }, { status: 200 });
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({ error: e }, { status: 400 });
   }
-  const { success } = registerSchema.safeParse(body);
-  console.log(success);
-  if (!success) {
-    return NextResponse.json({ message: "Incorrect Inputs" }, { status: 401 });
-  }
-  mongoose.connect(process.env.MONGO_URL);
-  const createdUser: any = await User.create(body);
-  //   return Response.json({ msg: "ok" });
-  //   return Response.json("ok");
-  return NextResponse.json(createdUser);
 }
