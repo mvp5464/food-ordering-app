@@ -3,50 +3,57 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
   secret: process.env.SECRET,
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
     CredentialsProvider({
       name: "Credentials",
+      id: "Credentials",
       credentials: {
-        email: {
-          label: "Username",
-          type: "text",
-          placeholder: "abc@example.com",
+        username: {
+          label: "Email",
+          type: "email",
+          placeholder: "test@example.com",
         },
-        password: { label: "Password", type: "password", placeholder: "*****" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // // You can also use the `req` object to obtain additional parameters
-        // // (i.e., the request IP address)
-        // const res = await fetch("/your/endpoint", {
-        //   method: "POST",
-        //   body: JSON.stringify(credentials),
-        //   headers: { "Content-Type": "application/json" },
-        // });
-        // const user = await res.json();
+        const email = credentials?.username; // Give error as by default it only provides username and password
+        const password = credentials?.password || "";
 
-        // // If no error and we have user data, return it
-        // if (res.ok && user) {
-        //   return user;
-        // }
-        // // Return null if user data could not be retrieved
-
-        //@ts-ignore
-        const { email, password }: { email: string; password: string } =
-          credentials;
-        // const email = credentials?.email; // Give error as by default it only provides username and password
-        // const password = credentials?.password;
         mongoose.connect(process.env.MONGO_URL || "");
         const user = await User.findOne({ email });
+        if (!user) {
+          return null;
+        }
+        console.log(user);
         const passwordOK = user && bcrypt.compareSync(password, user.password);
         console.log(credentials);
+        console.log({ passwordOK });
+        if (passwordOK) {
+          return user;
+        }
         return null;
       },
     }),
   ],
+  callbacks: {
+    // TODO: can u fix the type here? Using any is bad
+    async session({ token, session }: any) {
+      session.user.id = token.sub;
+      console.log(session);
+      return session;
+    },
+  },
+  // pages: {
+  //   signIn: "/login",
+  // },
 });
 
 export { handler as GET, handler as POST };
