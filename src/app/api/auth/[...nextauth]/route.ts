@@ -1,4 +1,6 @@
 import { User } from "@/app/models/user";
+// import clientPromise from "@/lib/db";
+// import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import NextAuth from "next-auth";
@@ -6,6 +8,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
+  // //@ts-ignore
+  // adapter: MongoDBAdapter(clientPromise),
   secret: process.env.SECRET,
   providers: [
     GoogleProvider({
