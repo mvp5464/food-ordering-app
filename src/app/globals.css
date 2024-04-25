@@ -9,14 +9,16 @@ section.hero {
 
 input[type="email"],
 input[type="password"],
+input[type="tel"],
 input[type="text"] {
-  @apply block w-full my-4 rounded-xl;
+  @apply block w-full my-2 rounded-xl;
   @apply border p-2 border-gray-300 bg-gray-100;
 }
 input[type="email"]:disabled,
 input[type="password"]:disabled,
+input[type="tel"]:disabled,
 input[type="text"]:disabled {
-  @apply bg-gray-300 cursor-not-allowed;
+  @apply bg-gray-300 border-0 cursor-not-allowed text-gray-500;
 }
 
 button {
@@ -32,4 +34,14 @@ button[type="submit"],
 button[type="submit"]:disabled,
 .submit:disabled {
   @apply cursor-not-allowed bg-red-400;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

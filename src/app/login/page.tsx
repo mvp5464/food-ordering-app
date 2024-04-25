@@ -1,10 +1,10 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function LoginPage() {
-  // const { data: session } = useSession();
+  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginInProgress, setLoginInProgress] = useState(false);
@@ -14,8 +14,7 @@ export default function LoginPage() {
     setLoginInProgress(true);
     console.log(email, password);
     const res = await signIn("credentials", {
-      // username: email,
-      email,
+      username: email,
       password,
       callbackUrl: "/",
     });
@@ -27,7 +26,7 @@ export default function LoginPage() {
     <section className=" mt-8">
       <h1 className=" text-center text-primary text-4xl mb-4">Login</h1>
       <form className="max-w-xs mx-auto" onSubmit={handleFormSubmit}>
-        {/* {JSON.stringify(session)} */}
+        {JSON.stringify(session)}
         <input
           type="email"
           name="email"

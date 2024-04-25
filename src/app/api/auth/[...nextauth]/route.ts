@@ -7,10 +7,10 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
+export const authOptions = {
   // //@ts-ignore
   // adapter: MongoDBAdapter(clientPromise),
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -27,10 +27,12 @@ const handler = NextAuth({
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials, req) {
         const email = credentials?.username; // Give error as by default it only provides username and password
         const password = credentials?.password || "";
-
+        console.log("OKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
+        console.log(email, password);
         mongoose.connect(process.env.MONGO_URL || "");
         const user = await User.findOne({ email });
         if (!user) {
@@ -48,16 +50,19 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    // TODO: can u fix the type here? Using any is bad
-    async session({ token, session }: any) {
-      session.user.id = token.sub;
+    session: ({ session, token, user }: any) => {
       console.log(session);
+      if (session && session.user) {
+        session.user.idOK1 = token.sub;
+      }
       return session;
     },
   },
   // pages: {
   //   signIn: "/login",
   // },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
