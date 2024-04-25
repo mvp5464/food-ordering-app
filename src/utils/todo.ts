@@ -2,6 +2,8 @@
 *********What to do**********
 when login with google then add that to the database
 
+Get all the data in the session (not just name, email and image)
+
 */
 /*
 *********Learnings**********
@@ -14,5 +16,6 @@ What is object formdata and .set and .get on it
 
 AWS-S3 from 3:45 - to upload image there
 - Can use privacy.com for fake credit card (you can put some money in there and  used to get debited from it)
+
 
 */

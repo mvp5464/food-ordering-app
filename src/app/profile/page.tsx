@@ -22,8 +22,16 @@ export default function ProfilePage() {
   const userImage = session.data?.user?.image || "";
 
   useEffect(() => {
-    status === "authenticated" && setUserName(session.data?.user?.name || "");
-  }, [status]);
+    if (status === "authenticated") {
+      setUserName(session.data?.user?.name || "");
+      fetch("/api/profile").then((res: any) => {
+        res.json().then((data: any) => {
+          console.log(data);
+          setPhone(data.phone);
+        });
+      });
+    }
+  }, [status, session]);
 
   async function handleProfileForUpdate(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -126,6 +134,7 @@ export default function ProfilePage() {
             </div>
           </div> */}
           <form className="grow" onSubmit={handleProfileForUpdate}>
+            <label>Name</label>
             <input
               type="text"
               disabled={isSaving}
@@ -136,45 +145,61 @@ export default function ProfilePage() {
                 return setUserName(e.target.value);
               }}
             />
+            <label>Email</label>
             <input
               className=" select-none"
               type="email"
               disabled={true}
+              placeholder="Email"
               value={session.data?.user?.email || ""}
             />
+            <label>Phone number</label>
             <input
               type="tel"
               placeholder="Phone number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
+            <label>Street address</label>
             <input
               type="text"
               placeholder="Street address"
               value={streetAddress}
               onChange={(e) => setStreetAddress(e.target.value)}
             />
-            <div className="flex gap-4">
-              <input
-                type="text"
-                placeholder="Postal code"
-                value={postalCode}
-                onChange={(e) => setPostalCode(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              />
+            <div className="flex gap-2">
+              <div>
+                <label>Postal code</label>
+                <input
+                  style={{ margin: "0" }}
+                  type="text"
+                  placeholder="Postal code"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>City</label>
+                <input
+                  style={{ margin: "0" }}
+                  type="text"
+                  placeholder="City"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Country</label>
+                <input
+                  style={{ margin: "0" }}
+                  type="text"
+                  placeholder="Country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                />
+              </div>
             </div>
-            <button disabled={isSaving} type="submit">
+            <button className=" mt-2" disabled={isSaving} type="submit">
               Save
             </button>
           </form>

@@ -17,3 +17,11 @@ export async function PUT(req: NextRequest) {
   console.log({ result });
   return NextResponse.json(true);
 }
+
+export async function GET() {
+  mongoose.connect(process.env.MONGO_URL || "");
+  const session = await getServerSession(authOptions);
+  const email = session.user.email; //Not showing options
+  const userData = await User.findOne({ email });
+  return NextResponse.json({ userData });
+}
