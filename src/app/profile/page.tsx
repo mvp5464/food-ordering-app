@@ -1,6 +1,8 @@
 "use client";
+import UserTabs from "@/components/layout/UserTabs";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -16,6 +18,8 @@ export default function ProfilePage() {
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
 
   console.log(session);
   const { status } = session;
@@ -27,7 +31,13 @@ export default function ProfilePage() {
       fetch("/api/profile").then((res: any) => {
         res.json().then((data: any) => {
           console.log(data);
-          setPhone(data.phone);
+          setPhone(data.userData.phone);
+          setStreetAddress(data.userData.streetAddress);
+          setPostalCode(data.userData.postalCode);
+          setCity(data.userData.city);
+          setCountry(data.userData.country);
+          setIsAdmin(data.userData.isAdmin);
+          setProfileFetched(true);
         });
       });
     }
@@ -86,14 +96,16 @@ export default function ProfilePage() {
   //     }
   //   }
 
-  if (status === "loading") {
+  if (status === "loading" || !profileFetched) {
     return "Loading...";
   }
   if (status === "unauthenticated") {
     return redirect("/login");
   }
+  console.log("isadmin", isAdmin);
   return (
     <section className=" mt-8">
+      <UserTabs isAdmin={isAdmin} />
       <h1 className=" text-center text-primary text-4xl mb-4">Profile</h1>
       <div className=" max-w-md mx-auto ">
         {/* <h2

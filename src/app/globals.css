@@ -39,6 +39,17 @@ button[type="submit"]:disabled,
   @apply cursor-not-allowed bg-red-400;
 }
 
+/* Apply to every child of div with class tabs */
+div.tabs > * {
+  @apply bg-gray-300 text-gray-700 rounded-full py-2 px-4;
+}
+
+/* Apply to child div with class active of parent div with class tabs */
+
+div.tabs > *.active {
+  @apply bg-primary text-white;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

@@ -10,7 +10,7 @@ export async function PUT(req: NextRequest) {
   const session = await getServerSession(authOptions);
   console.log({ session });
   console.log(data.name);
-  const email = session.user.email; //Not showing options
+  const email = session?.user?.email; //Not showing options
 
   console.log("Inside");
   const result = await User.updateOne({ email }, data);
@@ -21,7 +21,7 @@ export async function PUT(req: NextRequest) {
 export async function GET() {
   mongoose.connect(process.env.MONGO_URL || "");
   const session = await getServerSession(authOptions);
-  const email = session.user.email; //Not showing options
+  const email = session?.user?.email; //Not showing options
   const userData = await User.findOne({ email });
   return NextResponse.json({ userData });
 }

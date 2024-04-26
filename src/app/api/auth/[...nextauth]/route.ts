@@ -1,16 +1,16 @@
 import { User } from "@/app/models/user";
-// import clientPromise from "@/lib/db";
-// import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from "@/lib/db";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   // //@ts-ignore
   // adapter: MongoDBAdapter(clientPromise),
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -53,7 +53,7 @@ export const authOptions = {
     session: ({ session, token, user }: any) => {
       console.log(session);
       if (session && session.user) {
-        session.user.idOK1 = token.sub;
+        session.user.id = token.sub;
       }
       return session;
     },
