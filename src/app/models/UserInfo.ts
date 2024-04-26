@@ -1,20 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema(
+const UserInfoSchema = new Schema(
   {
-    name: { type: String },
     email: { type: String, required: true, unique: true },
-    password: {
-      type: String,
-      required: true,
-    },
-    phone: { type: String },
     streetAddress: { type: String },
     postalCode: { type: String },
     city: { type: String },
     country: { type: String },
     isAdmin: { type: Boolean, default: false },
+    phone: { type: String },
   },
   { timestamps: true }
 );
-export const User = models?.User || model("User", UserSchema);
+
+export const UserInfo = models?.UserInfo || model("UserInfo", UserInfoSchema);

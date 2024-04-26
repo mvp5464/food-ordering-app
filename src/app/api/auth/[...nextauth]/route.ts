@@ -1,4 +1,4 @@
-import { User } from "@/app/models/user";
+import { User } from "@/app/models/User";
 import clientPromise from "@/lib/db";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import bcrypt from "bcrypt";

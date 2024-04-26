@@ -17,5 +17,5 @@ What is object formdata and .set and .get on it
 AWS-S3 from 3:45 - to upload image there
 - Can use privacy.com for fake credit card (you can put some money in there and  used to get debited from it)
 
-
+.lean() function
 */

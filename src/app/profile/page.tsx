@@ -24,6 +24,7 @@ export default function ProfilePage() {
   console.log(session);
   const { status } = session;
   const userImage = session.data?.user?.image || "";
+  const email = session.data?.user?.email || "";
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -31,12 +32,13 @@ export default function ProfilePage() {
       fetch("/api/profile").then((res: any) => {
         res.json().then((data: any) => {
           console.log(data);
-          setPhone(data.userData.phone);
-          setStreetAddress(data.userData.streetAddress);
-          setPostalCode(data.userData.postalCode);
-          setCity(data.userData.city);
-          setCountry(data.userData.country);
-          setIsAdmin(data.userData.isAdmin);
+          setPhone(data.phone);
+          setStreetAddress(data.streetAddress);
+          setPostalCode(data.postalCode);
+          setCity(data.city);
+          setCountry(data.country);
+          setIsAdmin(data.isAdmin);
+          setUserName(data.name);
           setProfileFetched(true);
         });
       });
@@ -59,6 +61,7 @@ export default function ProfilePage() {
           postalCode,
           city,
           country,
+          email,
         }),
       });
       res.ok ? resolve() : reject();
@@ -163,7 +166,7 @@ export default function ProfilePage() {
               type="email"
               disabled={true}
               placeholder="Email"
-              value={session.data?.user?.email || ""}
+              value={email}
             />
             <label>Phone number</label>
             <input
