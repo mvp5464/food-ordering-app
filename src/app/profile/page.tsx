@@ -1,5 +1,6 @@
 "use client";
 import UserTabs from "@/components/layout/UserTabs";
+import EditableImage from "@/components/layout/editableImage";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -125,9 +126,9 @@ export default function ProfilePage() {
           {isSaving ? "Saving..." : "Profile saved!"}
         </h2> */}
         <div className="flex gap-4 items-center">
-          {/* <div>
+          <div>
             <div className=" p-2 rounded-lg relative max-w-[120px]">
-              {userImage && (
+              {/* {userImage && (
                 <Image
                   className=" rounded-lg w-full h-full mb-1"
                   src={userImage}
@@ -145,9 +146,10 @@ export default function ProfilePage() {
                 <span className=" block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
                   Edit
                 </span>
-              </label>
+              </label> */}
+              {/* <EditableImage link={userImage} setLink={setimage}/> */}
             </div>
-          </div> */}
+          </div>
           <form className="grow" onSubmit={handleProfileForUpdate}>
             <label>Name</label>
             <input
