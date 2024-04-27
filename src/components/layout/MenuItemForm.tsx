@@ -1,6 +1,6 @@
 "use client";
 import EditableImage from "@/components/layout/editableImage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuItemPriceProps from "./MenuItemPriceProps";
 
 export default function MenuItemForm({
@@ -16,12 +16,38 @@ export default function MenuItemForm({
   const [name, setName] = useState(menuItem?.name || "");
   const [description, setDescription] = useState(menuItem?.description || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
-  const [sizes, setSizes] = useState<any>([]);
-  const [extraIngredientPrices, setExtraIngredientPrices] = useState<any>([]);
+  const [sizes, setSizes] = useState<any>(menuItem?.sizes || []);
+  const [extraIngredientPrices, setExtraIngredientPrices] = useState<any>(
+    menuItem?.extraIngredientPrices || []
+  );
+
+  // console.log("+++++++++++++++++++++++++++++");
+  // console.log(name);
+  // console.log(menuItem);
+  // console.log(menuItem.name);
+  // console.log(menuItem.sizes);
+
+  useEffect(() => {
+    setImage(menuItem?.image || "");
+    setName(menuItem?.name || "");
+    setDescription(menuItem?.description || "");
+    setBasePrice(menuItem?.basePrice || "");
+    setSizes(menuItem?.sizes || []);
+    setExtraIngredientPrices(menuItem?.extraIngredientPrices || []);
+  }, [menuItem]);
 
   return (
     <form
-      onSubmit={(e) => onSubmit(e, { image, name, description, basePrice })}
+      onSubmit={(e) =>
+        onSubmit(e, {
+          image,
+          name,
+          description,
+          basePrice,
+          sizes,
+          extraIngredientPrices,
+        })
+      }
       className=" mt-8 max-w-md mx-auto"
     >
       <div className=" grid items-start gap-4 grid-cols-10">

@@ -16,8 +16,16 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json(true);
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   mongoose.connect(process.env.MONGO_URL || "");
   const allItems = await MenuItem.find();
   return NextResponse.json(allItems);
+}
+
+export async function DELETE(req: NextRequest) {
+  mongoose.connect(process.env.MONGO_URL || "");
+  const url = new URL(req.url);
+  const _id = url.searchParams.get("_id");
+  await MenuItem.findByIdAndDelete({ _id });
+  return NextResponse.json(true);
 }

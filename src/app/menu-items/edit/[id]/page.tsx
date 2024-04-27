@@ -1,4 +1,5 @@
 "use client";
+import DeleteButton from "@/components/DeleteButton";
 import LeftArrow from "@/components/Icons/LeftArrow";
 import useProfile from "@/components/UseProfile";
 import MenuItemForm from "@/components/layout/MenuItemForm";
@@ -57,6 +58,28 @@ export default function EditMenuItemPage() {
       setRedirectToItems(true);
     });
   }
+
+  function handleDeleteClick() {
+    const promise = new Promise<void>(async (res, rej) => {
+      const response = await fetch("/api/menu-items?_id=" + id, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        res();
+      } else {
+        rej();
+      }
+
+      await toast.promise(promise, {
+        loading: "Saving this tasty item",
+        success: "Saved",
+        error: "Error",
+      });
+      setRedirectToItems(true);
+    });
+  }
+
   if (redirectToItems) {
     return redirect("/menu-items");
   }
@@ -76,6 +99,14 @@ export default function EditMenuItemPage() {
         </Link>
       </div>
       <MenuItemForm onSubmit={handleFormSubmit} menuItem={menuItem} />
+      <div className=" max-w-md mx-auto mt-2">
+        <div className=" max-w-xs ml-auto pl-4">
+          <DeleteButton
+            onDelete={handleDeleteClick}
+            label={"Delete this menu item"}
+          />
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import DeleteButton from "@/components/DeleteButton";
 import useProfile from "@/components/UseProfile";
 import UserTabs from "@/components/layout/UserTabs";
 import { redirect } from "next/navigation";
@@ -63,6 +64,26 @@ export default function CategoriesPage() {
   console.log(profileLoading);
   console.log(profileData?.isAdmin);
 
+  async function handleDeleteClick(_id: string) {
+    const promise1 = new Promise<void>(async (resolve, reject) => {
+      const response = await fetch("/api/categories?_id=" + _id, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+
+    await toast.promise(promise1, {
+      loading: "Deleting...",
+      success: "Deleted",
+      error: "Error",
+    });
+    fetchCategories();
+  }
+
   if (profileLoading) {
     console.log("waiting for info");
     return "Loading Info.....";
@@ -92,26 +113,47 @@ export default function CategoriesPage() {
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </div>
-          <div className="pb-2">
+          <div className="pb-2 flex gap-2">
             <button className="border border-primary" type="submit">
               {editingCategory ? "Update" : "Create"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setEditingCategory(null);
+                setCategoryName("");
+              }}
+            >
+              Cancel
             </button>
           </div>
         </div>
       </form>
       <div>
-        <h2 className="mt-8 text-sm text-gray-500">Edit category</h2>
+        <h2 className="mt-8 text-sm text-gray-500">Existing category</h2>
         {categories?.length > 0 &&
-          categories.map((c: { name: string }) => (
-            <button
-              className="  rounded-xl p-2 px-4 flex gap-1 mb-1 cursor-pointerrrr"
-              onClick={() => {
-                setEditingCategory(c);
-                setCategoryName(c.name);
-              }}
-            >
-              {c.name}
-            </button>
+          categories.map((c: { name: string; _id: string }) => (
+            <div className=" bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center">
+              <div className="grow">{c.name}</div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingCategory(c);
+                    setCategoryName(c.name);
+                  }}
+                >
+                  Edit
+                </button>
+                <DeleteButton
+                  label="Delete"
+                  onDelete={() => handleDeleteClick(c._id)}
+                />
+                {/* <button type="button" onClick={() => handleDeleteClick(c._id)}>
+                  Delete
+                </button> */}
+              </div>
+            </div>
           ))}
       </div>
     </section>

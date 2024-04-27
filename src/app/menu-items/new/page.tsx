@@ -40,6 +40,7 @@ export default function NewMenuItemPage() {
       setRedirectToItems(true);
     });
   }
+
   if (redirectToItems) {
     return redirect("/menu-items");
   }

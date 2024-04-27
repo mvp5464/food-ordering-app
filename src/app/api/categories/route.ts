@@ -20,3 +20,15 @@ export async function PUT(req: NextRequest) {
   const res = await Category.updateOne({ _id }, { name });
   return NextResponse.json(res);
 }
+
+export async function DELETE(req: NextRequest) {
+  mongoose.connect(process.env.MONGO_URL || "");
+  const url = new URL(req.url);
+  // console.log(req.url);
+  // console.log(url);
+  // console.log(url.searchParams);
+  // console.log(url.searchParams.get("_id"));
+  const _id = url.searchParams.get("_id");
+  await Category.findByIdAndDelete({ _id });
+  return NextResponse.json(true);
+}
