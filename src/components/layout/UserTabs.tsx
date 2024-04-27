@@ -22,7 +22,11 @@ export default function UserTabs({ isAdmin }: { isAdmin: boolean }) {
             Categories
           </Link>
           <Link
-            className={`${path === "/menu-items" ? "active" : ""}`}
+            // className={`${path === "/menu-items" ? "active" : ""} ${
+            //   path === "/menu-items/new" ? "active" : ""
+            // }`}
+            className={path.includes("menu-items") ? "active" : ""}
+            // className={/menu-item/.test(path) ? "active" : ""} // How this works regex
             href={"/menu-items"}
           >
             Menu Items
