@@ -4,6 +4,9 @@ when login with google then add that to the database
 
 Get all the data in the session (not just name, email and image)
 
+category can't be deletd if have menu-items (strict relation database)
+
+create a central form layout used everywhere
 */
 /*
 *********Learnings**********

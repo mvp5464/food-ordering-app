@@ -23,16 +23,9 @@ export default function MenuItemForm({
     menuItem?.extraIngredientPrices || []
   );
 
-  // console.log("+++++++++++++++++++++++++++++");
-  // console.log(name);
-  // console.log(menuItem);
-  // console.log(menuItem.name);
-  // console.log(menuItem.sizes);
-
   useEffect(() => {
     fetch("/api/categories").then((res) => {
       res.json().then((allCategories) => {
-        console.log(allCategories);
         setCategories(allCategories);
       });
     });
@@ -60,7 +53,7 @@ export default function MenuItemForm({
           category,
         })
       }
-      className=" mt-8 max-w-md mx-auto"
+      className=" mt-8 max-w-2xl mx-auto"
     >
       <div className=" grid items-start gap-4 grid-cols-10">
         <div className=" col-span-3">
