@@ -7,6 +7,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import useProfile from "../UseProfile";
 
 interface UserType {
   email: string;
@@ -37,7 +38,8 @@ export default function UserForm({
   const [city, setCity] = useState(user?.city || "");
   const [country, setCountry] = useState(user?.country || "");
   const [email, setEmail] = useState(user?.email || "");
-  //   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(user?.isAdmin || false);
+  const { data: loggedInUserData } = useProfile();
   //   const [profileFetched, setProfileFetched] = useState(false);
 
   useEffect(() => {
@@ -49,6 +51,7 @@ export default function UserForm({
     setCity(user?.city || "");
     setCountry(user?.country || "");
     setEmail(user?.email || "");
+    setIsAdmin(user?.isAdmin || false);
   }, [user]);
   return (
     <div className="flex gap-4">
@@ -69,6 +72,7 @@ export default function UserForm({
             city,
             country,
             email,
+            isAdmin,
           })
         }
       >
@@ -137,6 +141,24 @@ export default function UserForm({
             />
           </div>
         </div>
+        {loggedInUserData?.isAdmin && (
+          <div>
+            <label
+              className="p-2 inline-flex items-center gap-2 my-2"
+              htmlFor="adminCb"
+            >
+              <input
+                type="checkbox"
+                id="adminCb"
+                className=""
+                value={"1"}
+                checked={isAdmin}
+                onChange={(e) => setIsAdmin(e.target.checked)}
+              />
+              <span>Admin</span>
+            </label>
+          </div>
+        )}
         <button className=" mt-2" type="submit">
           Save
         </button>
