@@ -17,6 +17,8 @@ export default function MenuItemForm({
   const [description, setDescription] = useState(menuItem?.description || "");
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || "");
   const [sizes, setSizes] = useState<any>(menuItem?.sizes || []);
+  const [category, setCategory] = useState<any>(menuItem?.category || "");
+  const [categories, setCategories] = useState<any[]>([]);
   const [extraIngredientPrices, setExtraIngredientPrices] = useState<any>(
     menuItem?.extraIngredientPrices || []
   );
@@ -26,6 +28,15 @@ export default function MenuItemForm({
   // console.log(menuItem);
   // console.log(menuItem.name);
   // console.log(menuItem.sizes);
+
+  useEffect(() => {
+    fetch("/api/categories").then((res) => {
+      res.json().then((allCategories) => {
+        console.log(allCategories);
+        setCategories(allCategories);
+      });
+    });
+  }, []);
 
   useEffect(() => {
     setImage(menuItem?.image || "");
@@ -46,6 +57,7 @@ export default function MenuItemForm({
           basePrice,
           sizes,
           extraIngredientPrices,
+          category,
         })
       }
       className=" mt-8 max-w-md mx-auto"
@@ -67,6 +79,18 @@ export default function MenuItemForm({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          <label>Category</label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            {categories?.length > 0 &&
+              categories.map((c, i) => (
+                <option key={i} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+          </select>
           <label>Base price</label>
           <input
             type="text"
