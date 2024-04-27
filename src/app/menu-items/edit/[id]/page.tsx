@@ -1,6 +1,7 @@
 "use client";
 import LeftArrow from "@/components/Icons/LeftArrow";
 import useProfile from "@/components/UseProfile";
+import MenuItemForm from "@/components/layout/MenuItemForm";
 import UserTabs from "@/components/layout/UserTabs";
 import EditableImage from "@/components/layout/editableImage";
 import Link from "next/link";
@@ -12,6 +13,7 @@ export default function EditMenuItemPage() {
   const { id } = useParams();
 
   const { loading, data } = useProfile();
+  const [menuItem, setMenuItem] = useState<any>([]);
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -22,17 +24,14 @@ export default function EditMenuItemPage() {
     fetch("/api/menu-items").then((res) =>
       res.json().then((items: any) => {
         const item = items.find((i: any) => i._id === id);
-        setImage(item.image);
-        setName(item.name);
-        setDescription(item.description);
-        setBasePrice(item.basePrice);
+        setMenuItem(item);
       })
     );
   }, []);
 
-  async function handleFormSubmit(e: any) {
+  async function handleFormSubmit(e: any, data: any) {
     e.preventDefault();
-    const data = { _id: id, image, name, description, basePrice };
+    data = { ...data, _id: id };
 
     const savingPromise = new Promise<void>(async (res, rej) => {
       const response = await fetch("/api/menu-items", {
@@ -76,34 +75,7 @@ export default function EditMenuItemPage() {
           <span>Show all menu items</span>
         </Link>
       </div>
-      <form onSubmit={handleFormSubmit} className=" mt-8 max-w-md mx-auto">
-        <div className=" grid items-start gap-4 grid-cols-10">
-          <div className=" col-span-3">
-            <EditableImage link={image} setLink={setImage} />
-          </div>
-          <div className="grow col-span-7">
-            <label>Item name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label>Description</label>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <label>Base price</label>
-            <input
-              type="text"
-              value={basePrice}
-              onChange={(e) => setBasePrice(e.target.value)}
-            />
-            <button type="submit">Save</button>
-          </div>
-        </div>
-      </form>
+      <MenuItemForm onSubmit={handleFormSubmit} menuItem={menuItem} />
     </section>
   );
 }
