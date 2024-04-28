@@ -1,13 +1,7 @@
 "use client";
-import UserTabs from "@/components/layout/UserTabs";
-import EditableImage from "@/components/layout/editableImage";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import useProfile from "../UseProfile";
+import AddressInputs from "./AddressInputs";
 
 interface UserType {
   email: string;
@@ -53,6 +47,14 @@ export default function UserForm({
     setEmail(user?.email || "");
     setIsAdmin(user?.isAdmin || false);
   }, [user]);
+
+  function handleAddressChange(propName: any, value: any) {
+    if (propName === "phone") setPhone(value);
+    if (propName === "streetAddress") setStreetAddress(value);
+    if (propName === "postalCode") setPostalCode(value);
+    if (propName === "city") setCity(value);
+    if (propName === "country") setCountry(value);
+  }
   return (
     <div className="flex gap-4">
       <div>
@@ -95,52 +97,10 @@ export default function UserForm({
           placeholder="Email"
           value={email}
         />
-        <label>Phone number</label>
-        <input
-          type="tel"
-          placeholder="Phone number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+        <AddressInputs
+          addressProps={{ phone, streetAddress, postalCode, city, country }}
+          setAddressProp={handleAddressChange}
         />
-        <label>Street address</label>
-        <input
-          type="text"
-          placeholder="Street address"
-          value={streetAddress}
-          onChange={(e) => setStreetAddress(e.target.value)}
-        />
-        <div className="flex gap-2">
-          <div>
-            <label>Postal code</label>
-            <input
-              style={{ margin: "0" }}
-              type="text"
-              placeholder="Postal code"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>City</label>
-            <input
-              style={{ margin: "0" }}
-              type="text"
-              placeholder="City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>Country</label>
-            <input
-              style={{ margin: "0" }}
-              type="text"
-              placeholder="Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            />
-          </div>
-        </div>
         {loggedInUserData?.isAdmin && (
           <div>
             <label
