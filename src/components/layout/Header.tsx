@@ -14,12 +14,12 @@ export default function Header() {
     <header className=" flex justify-between items-center">
       <nav className="flex gap-8 font-semibold text-gray-500 items-center">
         <Link className=" text-primary font-semibold text-2xl" href={"/"}>
-          Dr's Cafe
+          0l's Oate
         </Link>
         <Link href={"/"}>Home</Link>
-        <Link href={""}>Menu</Link>
-        <Link href={""}>About</Link>
-        <Link href={""}>Contact</Link>
+        <Link href={"/menu"}>Menu</Link>
+        <Link href={"/#about"}>About</Link>
+        <Link href={"/#contact"}>Contact</Link>
       </nav>
       <nav className=" flex gap-4 items-center text-gray-500 font-semibold">
         {status == "authenticated" && (

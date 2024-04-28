@@ -27,10 +27,11 @@ export default function Hero() {
       <div className=" relative">
         {/* Height of pizza depends on the h1 text height */}
         <Image
-          layout={"fill"}
-          objectFit={"contain"}
+          fill
+          style={{ objectFit: "contain" }}
           src={"/pizza2.png"}
           alt="ok"
+          priority={true}
         ></Image>
       </div>
       {/* <Image width={160} height={160} src={"/pizza2.png"} alt="ok"></Image> */}

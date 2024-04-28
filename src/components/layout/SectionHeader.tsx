@@ -2,7 +2,7 @@ export default function SectionHeader({
   subHeader,
   mainHeader,
 }: {
-  subHeader: string;
+  subHeader?: string;
   mainHeader: string;
 }) {
   return (

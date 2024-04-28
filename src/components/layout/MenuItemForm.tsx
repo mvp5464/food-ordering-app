@@ -27,6 +27,7 @@ export default function MenuItemForm({
     fetch("/api/categories").then((res) => {
       res.json().then((allCategories) => {
         setCategories(allCategories);
+        setCategory(category || allCategories[0]._id);
       });
     });
   }, []);
@@ -37,6 +38,7 @@ export default function MenuItemForm({
     setDescription(menuItem?.description || "");
     setBasePrice(menuItem?.basePrice || "");
     setSizes(menuItem?.sizes || []);
+    setCategory(menuItem?.category || "");
     setExtraIngredientPrices(menuItem?.extraIngredientPrices || []);
   }, [menuItem]);
 
@@ -74,7 +76,7 @@ export default function MenuItemForm({
           />
           <label>Category</label>
           <select
-            value={category}
+            value={category || categories[0]?._id || ""}
             onChange={(e) => setCategory(e.target.value)}
           >
             {categories?.length > 0 &&
