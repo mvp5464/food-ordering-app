@@ -7,6 +7,9 @@ Get all the data in the session (not just name, email and image)
 category can't be deletd if have menu-items (strict relation database)
 
 create a central form layout used everywhere
+
+after adding sauce and then coming back after cancelling it will double the extra with single price and if come third time then 3 extra for one price
+
 */
 /*
 *********Learnings**********
@@ -23,5 +26,9 @@ AWS-S3 from 3:45 - to upload image there
 .lean() function
 
 /menu-item/.test(path)
+
+what is inset-0 means in CSS
+
+what is tabnine (giving suggestion in vscode) download it
 
 */

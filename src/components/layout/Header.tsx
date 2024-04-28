@@ -1,14 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { CartContext } from "../AppContext";
 
 export default function Header() {
   const session = useSession();
   const userDate = session.data?.user;
   const userName =
     userDate?.name?.split(" ")[0] || userDate?.email?.split("@")[0];
+  //@ts-ignore
+  const { cartProducts } = useContext(CartContext);
   const status = session.status;
   return (
     <header className=" flex justify-between items-center">
@@ -46,6 +49,7 @@ export default function Header() {
             </Link>
           </>
         )}
+        <Link href={"/cart"}>Cart({cartProducts?.length || 0})</Link>
       </nav>
     </header>
   );
