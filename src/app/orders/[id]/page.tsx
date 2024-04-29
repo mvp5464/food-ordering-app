@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 export default function OrderPage() {
   //@ts-ignore
   const { clearCart } = useContext(CartContext);
+  const [loadingOrders, setLoadingOrders] = useState<boolean>(true);
   const [order, setOrder] = useState<any>();
   const { id } = useParams();
 
@@ -20,10 +21,11 @@ export default function OrderPage() {
     }
 
     if (id) {
+      setLoadingOrders(true);
       fetch("/api/orders?_id=" + id).then((res) => {
         res.json().then((orderData) => {
           setOrder(orderData);
-          console.log(orderData);
+          setLoadingOrders(false);
         });
       });
     }
@@ -43,6 +45,7 @@ export default function OrderPage() {
         <p>Thanks for your order</p>
         <p>We will call you when your order will be on the way.</p>
       </div>
+      {loadingOrders && <div>Loading order...</div>}
       {order && (
         <div className="grid grid-cols-2 gap-16">
           <div>

@@ -1,19 +1,27 @@
 import { MenuItem } from "@/app/models/MenuItem";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || "");
   const data = await req.json();
-  const menuItemDoc = await MenuItem.create(data);
-  return NextResponse.json(menuItemDoc);
+  if (await isAdmin()) {
+    const menuItemDoc = await MenuItem.create(data);
+    return NextResponse.json(menuItemDoc);
+  } else {
+    return NextResponse.json({});
+  }
 }
 
 export async function PUT(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || "");
-  const { _id, ...data } = await req.json();
-  await MenuItem.findByIdAndUpdate(_id, data);
-  return NextResponse.json(true);
+  if (await isAdmin()) {
+    const { _id, ...data } = await req.json();
+    await MenuItem.findByIdAndUpdate(_id, data);
+    return NextResponse.json(true);
+  }
+  return NextResponse.json(false);
 }
 
 export async function GET() {
@@ -26,6 +34,9 @@ export async function DELETE(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || "");
   const url = new URL(req.url);
   const _id = url.searchParams.get("_id");
-  await MenuItem.findByIdAndDelete({ _id });
-  return NextResponse.json(true);
+  if (await isAdmin()) {
+    await MenuItem.findByIdAndDelete({ _id });
+    return NextResponse.json(true);
+  }
+  return NextResponse.json(false);
 }

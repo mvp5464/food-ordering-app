@@ -1,8 +1,8 @@
 import { User } from "@/app/models/User";
 import { UserInfo } from "@/app/models/UserInfo";
-import { Console } from "console";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 interface UserType {
   _id: string;
@@ -24,13 +24,22 @@ export async function GET(req: NextRequest) {
     const userInfoData = await UserInfo.findOne({
       email: userData?.email,
     }).lean();
-    console.log(userData);
-    console.log(userInfoData);
-    console.log({ ...userData, ...userInfoData });
     return NextResponse.json({ ...userData, ...userInfoData }); /// To join both into one
+  } else if (await isAdmin()) {
+    const users = await User.find();
+    return NextResponse.json(users);
   } else {
-    console.log("ID NO");
     const users = await User.find();
     return NextResponse.json(users);
   }
 }
+
+// export async function GET(req: NextRequest) {
+//   mongoose.connect(process.env.MONGO_URL || "");
+//   if (await isAdmin()) {
+//     const users = await User.find();
+//     return NextResponse.json(users);
+//   } else {
+//     return NextResponse.json([]);
+//   }
+// }

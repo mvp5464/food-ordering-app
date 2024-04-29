@@ -1,12 +1,17 @@
 import { Category } from "@/app/models/Category";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "../auth/[...nextauth]/route";
 
 export async function POST(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || ""); // This is not needed
   const { name } = await req.json();
-  const categoryDoc = await Category.create({ name });
-  return NextResponse.json(categoryDoc);
+  if (await isAdmin()) {
+    const categoryDoc = await Category.create({ name });
+    return NextResponse.json(categoryDoc);
+  } else {
+    return NextResponse.json(false);
+  }
 }
 
 export async function GET(req: NextRequest) {
@@ -17,18 +22,22 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || "");
   const { _id, name } = await req.json();
-  const res = await Category.updateOne({ _id }, { name });
-  return NextResponse.json(res);
+  if (await isAdmin()) {
+    const res = await Category.updateOne({ _id }, { name });
+    return NextResponse.json(res);
+  } else {
+    return NextResponse.json(false);
+  }
 }
 
 export async function DELETE(req: NextRequest) {
   mongoose.connect(process.env.MONGO_URL || "");
   const url = new URL(req.url);
-  // console.log(req.url);
-  // console.log(url);
-  // console.log(url.searchParams);
-  // console.log(url.searchParams.get("_id"));
   const _id = url.searchParams.get("_id");
-  await Category.findByIdAndDelete({ _id });
-  return NextResponse.json(true);
+  if (await isAdmin()) {
+    await Category.findByIdAndDelete({ _id });
+    return NextResponse.json(true);
+  } else {
+    return NextResponse.json(false);
+  }
 }
