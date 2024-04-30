@@ -70,5 +70,5 @@ export async function isAdmin() {
   if (!userInfo) {
     return false;
   }
-  return userInfo.admin;
+  return userInfo.isAdmin;
 }
