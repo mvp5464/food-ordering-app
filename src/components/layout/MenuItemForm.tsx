@@ -57,7 +57,7 @@ export default function MenuItemForm({
       }
       className=" mt-8 max-w-2xl mx-auto"
     >
-      <div className=" grid items-start gap-4 grid-cols-10">
+      <div className=" md:grid items-start gap-4 grid-cols-10">
         <div className=" col-span-3">
           <EditableImage link={image} setLink={setImage} />
         </div>
@@ -80,8 +80,8 @@ export default function MenuItemForm({
             onChange={(e) => setCategory(e.target.value)}
           >
             {categories?.length > 0 &&
-              categories.map((c, i) => (
-                <option key={i} value={c._id}>
+              categories.map((c) => (
+                <option key={c._id} value={c._id}>
                   {c.name}
                 </option>
               ))}

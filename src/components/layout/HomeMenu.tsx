@@ -24,11 +24,11 @@ export default function HomeMenu() {
         </div>
       </div>
       <SectionHeader subHeader={"Checkout"} mainHeader={"Our Best Sellers"} />
-      <div className=" grid grid-cols-3 gap-4">
+      <div className=" grid sm:grid-cols-3 gap-4">
         {bestSellers?.length > 0 &&
-          bestSellers.map((items, i) => (
+          bestSellers.map((items) => (
             <MenuItem
-              key={i}
+              key={items._id}
               {...items} //You can pass this whole item instead of passing every single items
               // image={"/pizza2.png"}
               // name={items.name}

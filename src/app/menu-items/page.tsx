@@ -24,12 +24,9 @@ export default function MenuItemsPage() {
     return "Loading user info...";
   }
 
-  console.log(data.isAdmin);
-
   if (!data.isAdmin) {
     return "Not an admin";
   }
-  console.log(menuItems);
   return (
     <section className=" mt-8 max-w-2xl mx-auto">
       <UserTabs isAdmin={data.isAdmin} />
@@ -43,9 +40,9 @@ export default function MenuItemsPage() {
         <h2 className="text-sm text-gray-500 mt-8">Edit menu item:</h2>
         <div className="grid grid-cols-3 gap-2">
           {menuItems?.length > 0 &&
-            menuItems.map((item: any, i: number) => (
+            menuItems.map((item: any) => (
               <Link
-                key={i}
+                key={item._id}
                 href={"/menu-items/edit/" + item._id}
                 className=" bg-gray-200 rounded-lg p-4"
               >

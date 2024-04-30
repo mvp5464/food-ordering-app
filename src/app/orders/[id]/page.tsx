@@ -37,7 +37,6 @@ export default function OrderPage() {
       subtotal += cartProductPrice(product);
     }
   }
-  console.log(order);
   return (
     <section className=" max-w-2xl mx-auto text-center mt-8">
       <div className=" text-center">
@@ -47,10 +46,10 @@ export default function OrderPage() {
       </div>
       {loadingOrders && <div>Loading order...</div>}
       {order && (
-        <div className="grid grid-cols-2 gap-16">
+        <div className="grid md:grid-cols-2 md:gap-16">
           <div>
             {order.cartProducts.map((product: any) => (
-              <CartProduct product={product} />
+              <CartProduct key={product._id} product={product} />
             ))}
             <div className=" text-right py-2 text-gray-500">
               Subtotal:

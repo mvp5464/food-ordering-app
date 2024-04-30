@@ -34,7 +34,6 @@ export default function CategoriesPage() {
       const data: DataType = { name: CategoryName };
       if (editingCategory) {
         data._id = editingCategory._id;
-        console.log(data);
       }
       const response = await fetch("/api/categories", {
         method: editingCategory ? "PUT" : "POST",
@@ -44,7 +43,6 @@ export default function CategoriesPage() {
       setCategoryName("");
       fetchCategories();
       setEditingCategory(null);
-      console.log(response);
       if (response.ok) {
         resolve();
       } else {
@@ -59,10 +57,6 @@ export default function CategoriesPage() {
       error: "Error, sorry...",
     });
   }
-
-  console.log(profileData);
-  console.log(profileLoading);
-  console.log(profileData?.isAdmin);
 
   async function handleDeleteClick(_id: string) {
     const promise1 = new Promise<void>(async (resolve, reject) => {
@@ -85,13 +79,11 @@ export default function CategoriesPage() {
   }
 
   if (profileLoading) {
-    console.log("waiting for info");
     return "Loading Info.....";
   }
   //   profileLoading && "Loading INfo ........"; //NOT WORKING PROPERLY WHY
 
   if (!profileData?.isAdmin) {
-    console.log("you are not admin");
     return redirect("/profile");
     return "YOU are not admin";
   }
@@ -133,7 +125,10 @@ export default function CategoriesPage() {
         <h2 className="mt-8 text-sm text-gray-500">Existing category</h2>
         {categories?.length > 0 &&
           categories.map((c: { name: string; _id: string }) => (
-            <div className=" bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center">
+            <div
+              key={c._id}
+              className=" bg-gray-100 rounded-xl p-2 px-4 flex gap-1 mb-1 items-center"
+            >
               <div className="grow">{c.name}</div>
               <div className="flex gap-2">
                 <button

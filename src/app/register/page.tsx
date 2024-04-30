@@ -22,11 +22,9 @@ export default function RegisterPage() {
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
       });
-      console.log(response);
       response.ok ? setUserCreated(true) : setError(true);
       setCreatingUser(false);
     } catch (e) {
-      console.log({ Errrrrrrrrrrrrr: e });
       setCreatingUser(false);
     }
   }

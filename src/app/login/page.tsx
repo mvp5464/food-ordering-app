@@ -12,13 +12,11 @@ export default function LoginPage() {
   async function handleFormSubmit(e: any) {
     e.preventDefault();
     setLoginInProgress(true);
-    console.log(email, password);
     const res = await signIn("credentials", {
       username: email,
       password,
       callbackUrl: "/",
     });
-    console.log(res);
 
     setLoginInProgress(false);
   }
