@@ -2,7 +2,7 @@ import { User } from "@/app/models/User";
 import { UserInfo } from "@/app/models/UserInfo";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import { isAdmin } from "../auth/[...nextauth]/route";
+import { isAdmin } from "@/lib/authOptions";
 
 interface UserType {
   _id: string;

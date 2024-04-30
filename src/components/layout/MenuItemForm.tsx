@@ -30,7 +30,7 @@ export default function MenuItemForm({
         setCategory(category || allCategories[0]._id);
       });
     });
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     setImage(menuItem?.image || "");

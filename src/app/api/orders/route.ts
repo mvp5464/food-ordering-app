@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
-import { authOptions, isAdmin } from "../auth/[...nextauth]/route";
+import { authOptions, isAdmin } from "@/lib/authOptions";
 // import { UserInfo } from "@/app/models/UserInfo";
 import { NextRequest, NextResponse } from "next/server";
 import { Order } from "@/app/models/Order";
@@ -34,4 +34,5 @@ export async function GET(req: NextRequest) {
   if (userEmail) {
     return NextResponse.json(await Order.find({ userEmail }));
   }
+  return NextResponse.json(false);
 }

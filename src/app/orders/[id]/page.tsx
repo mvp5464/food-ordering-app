@@ -13,6 +13,10 @@ export default function OrderPage() {
   const [order, setOrder] = useState<any>();
   const { id } = useParams();
 
+  // useEffect(()=>{
+
+  // },[])
+
   useEffect(() => {
     if (typeof window.console !== "undefined") {
       if (window.location.href.includes("clear-cart=1")) {
@@ -29,7 +33,7 @@ export default function OrderPage() {
         });
       });
     }
-  }, [id]);
+  }, []);
 
   let subtotal = 0;
   if (order?.cartProducts) {
@@ -48,8 +52,8 @@ export default function OrderPage() {
       {order && (
         <div className="grid md:grid-cols-2 md:gap-16">
           <div>
-            {order.cartProducts.map((product: any) => (
-              <CartProduct key={product._id} product={product} />
+            {order.cartProducts.map((product: any, i: number) => (
+              <CartProduct key={i} product={product} />
             ))}
             <div className=" text-right py-2 text-gray-500">
               Subtotal:
@@ -69,7 +73,7 @@ export default function OrderPage() {
           </div>
           <div>
             <div className=" bg-gray-100 p-4 rounded-lg">
-              <AddressInputs disabled={true} addressProps={{ ...order }} />
+              <AddressInputs disabled={true} addressProps={{ order }} />
             </div>
           </div>
         </div>

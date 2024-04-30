@@ -9,7 +9,7 @@ package.json
 
 # testing
 /coverage
-
+netlify.toml
 # next.js
 /.next/
 /out/
@@ -38,3 +38,5 @@ yarn-error.log*
 next-env.d.ts
 
 utils/todo.ts
+# Local Netlify folder
+.netlify

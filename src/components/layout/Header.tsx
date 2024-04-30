@@ -51,7 +51,7 @@ export default function Header() {
     <header className="">
       <div className="flex justify-between items-center md:hidden">
         <Link className=" text-primary font-semibold text-2xl" href={"/"}>
-          0l's Oate
+          Dr&apos;s Cafe
         </Link>
         <div className="flex gap-8 items-center">
           <Link href={"/cart"} className=" relative">
@@ -85,7 +85,7 @@ export default function Header() {
       <div className=" hidden md:flex justify-between items-center">
         <nav className="flex gap-8 font-semibold text-gray-500 items-center">
           <Link className=" text-primary font-semibold text-2xl" href={"/"}>
-            0l's Oate
+            Dr&apos;s Cafe
           </Link>
           <Link href={"/"}>Home</Link>
           <Link href={"/menu"}>Menu</Link>

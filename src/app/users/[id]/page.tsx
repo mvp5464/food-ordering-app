@@ -18,7 +18,7 @@ export default function EditUserPage() {
         setUser(users);
       });
     });
-  }, []);
+  }, [id]);
 
   async function handleSaveButtonClick(
     e: FormEvent<HTMLFormElement>,

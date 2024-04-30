@@ -4,7 +4,7 @@ import LeftArrow from "@/components/Icons/LeftArrow";
 import useProfile from "@/components/UseProfile";
 import MenuItemForm from "@/components/layout/MenuItemForm";
 import UserTabs from "@/components/layout/UserTabs";
-import EditableImage from "@/components/layout/editableImage";
+// import EditableImage from "@/components/layout/editableImage";
 import Link from "next/link";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,10 +15,6 @@ export default function EditMenuItemPage() {
 
   const { loading, data } = useProfile();
   const [menuItem, setMenuItem] = useState<any>([]);
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [basePrice, setBasePrice] = useState("");
   const [redirectToItems, setRedirectToItems] = useState(false);
 
   useEffect(() => {
@@ -28,7 +24,7 @@ export default function EditMenuItemPage() {
         setMenuItem(item);
       })
     );
-  }, []);
+  }, [id]);
 
   async function handleFormSubmit(e: any, data: any) {
     e.preventDefault();
