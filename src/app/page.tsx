@@ -3,7 +3,7 @@ import Hero from "@/components/layout/Hero";
 import HomeMenu from "@/components/layout/HomeMenu";
 import SectionHeader from "@/components/layout/SectionHeader";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       {/* <Header /> */}

@@ -23,7 +23,7 @@ export default function MenuClientPage({
   }, []);
   return (
     <section className=" mt-8">
-      {JSON.stringify(allMenuItems)}
+      {/* {JSON.stringify(allMenuItems)} */}
       {categories?.length > 0 &&
         categories.map((c) => (
           <div key={c._id}>

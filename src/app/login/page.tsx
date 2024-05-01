@@ -24,7 +24,7 @@ export default function LoginPage() {
     <section className=" mt-8">
       <h1 className=" text-center text-primary text-4xl mb-4">Login</h1>
       <form className="max-w-xs mx-auto" onSubmit={handleFormSubmit}>
-        {JSON.stringify(session)}
+        {/* {JSON.stringify(session)} */}
         <input
           type="email"
           name="email"
@@ -37,7 +37,7 @@ export default function LoginPage() {
             // setError(false);
           }
         />
-        {JSON.stringify(email)}
+        {/* {JSON.stringify(email)} */}
         <input
           type="password"
           name="password"
@@ -50,7 +50,7 @@ export default function LoginPage() {
             // setError(false);
           }
         />
-        {JSON.stringify(password)}
+        {/* {JSON.stringify(password)} */}
         <button disabled={loginInProgress} type="submit">
           {/* remove the type="submit" from this to solve the login page use onclick instead */}
           Login
