@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
       );
     }
     // Check if user already exists
-    const user1 = await User.findOne({ email: body.email });
+    mongoose.connect(process.env.MONGO_URL);
+    const user1: any = await User.findOne({ email: body.email });
     console.log(user1);
     if (user1) {
       return NextResponse.json(

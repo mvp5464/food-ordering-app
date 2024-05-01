@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RightArrow from "../Icons/RightArrow";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -15,11 +16,11 @@ export default function Hero() {
         </p>
         <div className="flex gap-4 items-center text-sm">
           <button className=" bg-primary flex justify-center gap-2 items-center uppercase text-white font-semibold py-2 px-4 rounded-full">
-            Order now
+            <Link href={"/menu"}>Order now</Link>
             <RightArrow />
           </button>
           <button className="flex border-0 items-center font-semibold gap-2 text-gray-600">
-            Learn More
+            <Link href={"/#about"}>Learn More</Link>
             <RightArrow />
           </button>
         </div>

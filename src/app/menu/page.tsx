@@ -1,37 +1,13 @@
-"use client";
-import SectionHeader from "@/components/layout/SectionHeader";
-import MenuItem from "@/components/menu/MenuItem";
-import { useEffect, useState } from "react";
+import MenuClientPage from "@/components/clientComp/MenuClient";
+import { getMenuItems } from "@/utils/serverCalls";
 
-export default function MenuPage() {
-  const [categories, setCategories] = useState<any[]>([]);
-  const [menuItems, setMenuItems] = useState<any[]>([]);
+export const revalidate = 3600;
 
-  useEffect(() => {
-    fetch("/api/categories").then((res) => {
-      res.json().then((categories) => setCategories(categories));
-    });
-    fetch("/api/menu-items").then((res) => {
-      res.json().then((menuItems) => setMenuItems(menuItems));
-    });
-  }, []);
+export default async function MenuPage() {
+  const menuItems1 = await getMenuItems();
   return (
-    <section className=" mt-8">
-      {categories?.length > 0 &&
-        categories.map((c) => (
-          <div key={c._id}>
-            <div className=" text-center">
-              <SectionHeader mainHeader={c.name} />
-            </div>
-            <div className=" grid sm:grid-cols-3 gap-4 mt-6 mb-12">
-              {menuItems
-                .filter((item: any) => item.category === c._id)
-                .map((item) => (
-                  <MenuItem key={item._id} {...item} />
-                ))}
-            </div>
-          </div>
-        ))}
-    </section>
+    <>
+      <MenuClientPage allMenuItems={JSON.parse(JSON.stringify(menuItems1))} />
+    </>
   );
 }

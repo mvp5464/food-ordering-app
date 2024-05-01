@@ -18,7 +18,7 @@ export default function EditMenuItemPage() {
   const [redirectToItems, setRedirectToItems] = useState(false);
 
   useEffect(() => {
-    fetch("/api/menu-items").then((res) =>
+    fetch("/api/menu-items", { next: { revalidate: 3600 } }).then((res) =>
       res.json().then((items: any) => {
         const item = items.find((i: any) => i._id === id);
         setMenuItem(item);

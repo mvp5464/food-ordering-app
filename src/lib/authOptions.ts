@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
     }),
     CredentialsProvider({
       name: "Credentials",
-      id: "Credentials",
+      //   id: "Credentials",
       credentials: {
         username: {
           label: "Email",
@@ -55,9 +55,9 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // pages: {
-  //   signIn: "/login",
-  // },
+  pages: {
+    signIn: "/login",
+  },
 };
 
 export async function isAdmin() {

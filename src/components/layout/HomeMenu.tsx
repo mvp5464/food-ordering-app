@@ -7,21 +7,23 @@ import { useEffect, useState } from "react";
 export default function HomeMenu() {
   const [bestSellers, setBestSellers] = useState<any[]>([]);
   useEffect(() => {
-    fetch("/api/menu-items").then((res: any) => {
-      res.json().then((menuItems: any) => {
-        setBestSellers(menuItems.slice(-3));
-      });
-    });
+    fetch("/api/menu-items", { next: { revalidate: 3600 } }).then(
+      (res: any) => {
+        res.json().then((menuItems: any) => {
+          setBestSellers(menuItems.slice(-3));
+        });
+      }
+    );
   }, []);
   return (
     <section>
       <div className=" absolute h-fulls left-0 right-0 justify-center overflow-x-hiddens">
-        <div className=" absolute -left-0 -stop-[30px] text-left -z-10">
+        {/* <div className=" absolute -left-0 -stop-[30px] text-left -z-10">
           <Image src={"/leaf2.png"} alt="leaf" height={256} width={248} />
         </div>
         <div className="absolute -right-0 -stop-[50px] -z-10">
           <Image src={"/leaf2.png"} alt="leaf" height={256} width={248} />
-        </div>
+        </div> */}
       </div>
       <SectionHeader subHeader={"Checkout"} mainHeader={"Our Best Sellers"} />
       <div className=" grid sm:grid-cols-3 gap-4">

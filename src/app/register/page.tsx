@@ -14,6 +14,8 @@ export default function RegisterPage() {
   //   Optimise here as no need to fetch from the same backend (harkirat class)
   async function handleFormSubmit(e: any) {
     e.preventDefault();
+    setUserCreated(false);
+    setError(false);
     setCreatingUser(true);
 
     try {
@@ -45,7 +47,7 @@ export default function RegisterPage() {
           Error creating user.{" "}
         </div>
       )}
-      <form className=" block max-w-xs mx-auto " onSubmit={handleFormSubmit}>
+      <div className=" block max-w-xs mx-auto " onSubmit={handleFormSubmit}>
         <input
           disabled={creatingUser}
           type="email"
@@ -57,7 +59,7 @@ export default function RegisterPage() {
             setError(false);
           }}
         />
-        {JSON.stringify(email)}
+        {/* {JSON.stringify(email)} */}
         <input
           disabled={creatingUser}
           type="password"
@@ -69,14 +71,11 @@ export default function RegisterPage() {
             setError(false);
           }}
         />
-        {JSON.stringify(password)}
+        {/* {JSON.stringify(password)} */}
         <button
           type="submit"
           disabled={creatingUser}
-          onClick={() => {
-            setUserCreated(false);
-            setError(false);
-          }}
+          onClick={handleFormSubmit}
         >
           Register
         </button>
@@ -96,7 +95,7 @@ export default function RegisterPage() {
             Login here &raquo;
           </Link>
         </div>
-      </form>
+      </div>
     </section>
   );
 }

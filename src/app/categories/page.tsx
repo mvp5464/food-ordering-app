@@ -21,7 +21,7 @@ export default function CategoriesPage() {
     fetchCategories();
   }, []);
   function fetchCategories() {
-    fetch("/api/categories").then((res) => {
+    fetch("/api/categories", { next: { revalidate: 3600 } }).then((res) => {
       res.json().then((categories) => {
         setCategories(categories);
       });

@@ -13,7 +13,7 @@ export default function MenuItemsPage() {
   const [menuItems, setMenuItems] = useState<any>([]);
 
   useEffect(() => {
-    fetch("/api/menu-items").then((res) => {
+    fetch("/api/menu-items", { next: { revalidate: 3600 } }).then((res) => {
       res.json().then((menuItems) => {
         setMenuItems(menuItems);
       });
