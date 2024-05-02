@@ -11,3 +11,12 @@ export default async function MenuPage() {
     </>
   );
 }
+
+MenuPage.getInitialProps = async () => {
+  let pageProps: any = {};
+
+  const res = await fetch("/api/menu-items");
+  const projects = await res.json();
+  pageProps["data"] = projects;
+  return { pageProps };
+};

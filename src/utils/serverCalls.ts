@@ -1,4 +1,4 @@
-import { MenuItem } from "@/app/models/MenuItem";
+import { MenuItem } from "@/app/models/db";
 import mongoose from "mongoose";
 import { cache } from "react";
 

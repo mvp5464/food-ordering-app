@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (status === "authenticated") {
-      fetch("/api/profile", { next: { revalidate: 3600 } }).then((res: any) => {
+      fetch("/api/profile").then((res: any) => {
         res.json().then((data: any) => {
           setUser(data);
           setIsAdmin(data.isAdmin);

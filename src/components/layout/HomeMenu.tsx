@@ -7,13 +7,11 @@ import { useEffect, useState } from "react";
 export default function HomeMenu() {
   const [bestSellers, setBestSellers] = useState<any[]>([]);
   useEffect(() => {
-    fetch("/api/menu-items", { next: { revalidate: 3600 } }).then(
-      (res: any) => {
-        res.json().then((menuItems: any) => {
-          setBestSellers(menuItems.slice(-3));
-        });
-      }
-    );
+    fetch("/api/menu-items").then((res: any) => {
+      res.json().then((menuItems: any) => {
+        setBestSellers(menuItems.slice(-3));
+      });
+    });
   }, []);
   return (
     <section>

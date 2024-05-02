@@ -1,4 +1,4 @@
-import { MenuItem } from "@/app/models/MenuItem";
+import { MenuItem } from "@/app/models/db";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/authOptions";

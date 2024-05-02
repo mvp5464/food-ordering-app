@@ -1,4 +1,4 @@
-import { User } from "@/app/models/User";
+import { User } from "@/app/models/db";
 import { RegisterType, registerSchema } from "@/utils/zod";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";

@@ -8,12 +8,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+// export async function getStaticProps() {
+//   const res = await fetch("/api/menu-items", { next: { revalidate: 3600 } })
+//   const projects = await res.json()
+
+//   return { props: { projects } }
+// }
+
 export default function MenuItemsPage() {
   const { loading, data } = useProfile();
   const [menuItems, setMenuItems] = useState<any>([]);
 
   useEffect(() => {
-    fetch("/api/menu-items", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/menu-items").then((res) => {
       res.json().then((menuItems) => {
         setMenuItems(menuItems);
       });

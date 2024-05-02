@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth";
 const stripe = require("stripe")(process.env.STRIPE_SK);
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "@/lib/authOptions";
-import { Order } from "@/app/models/Order";
-import { MenuItem } from "@/app/models/MenuItem";
+import { Order } from "@/app/models/db";
+import { MenuItem } from "@/app/models/db";
 // import Stripe from "stripe";
 
 export async function POST(req: NextRequest) {

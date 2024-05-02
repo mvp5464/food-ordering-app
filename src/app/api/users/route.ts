@@ -1,5 +1,5 @@
-import { User } from "@/app/models/User";
-import { UserInfo } from "@/app/models/UserInfo";
+import { User } from "@/app/models/db";
+import { UserInfo } from "@/app/models/db";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/authOptions";

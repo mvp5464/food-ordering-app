@@ -11,7 +11,7 @@ export default function MenuClientPage({
   const [categories, setCategories] = useState<any[]>([]);
   //   const [menuItems, setMenuItems] = useState<any[]>([]);
   useEffect(() => {
-    fetch("/api/categories", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/categories").then((res) => {
       res.json().then((categories) => setCategories(categories));
     });
     // fetch("/api/menu-items").then((res) => {

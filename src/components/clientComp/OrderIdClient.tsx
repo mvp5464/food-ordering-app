@@ -22,14 +22,12 @@ export default function OrderPage() {
 
     if (id) {
       setLoadingOrders(true);
-      fetch("/api/orders?_id=" + id, { next: { revalidate: 3600 } }).then(
-        (res) => {
-          res.json().then((orderData) => {
-            setOrder(orderData);
-            setLoadingOrders(false);
-          });
-        }
-      );
+      fetch("/api/orders?_id=" + id).then((res) => {
+        res.json().then((orderData) => {
+          setOrder(orderData);
+          setLoadingOrders(false);
+        });
+      });
     }
   }, [id]);
 

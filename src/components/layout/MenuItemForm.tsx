@@ -24,7 +24,7 @@ export default function MenuItemForm({
   );
 
   useEffect(() => {
-    fetch("/api/categories", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/categories").then((res) => {
       res.json().then((allCategories) => {
         setCategories(allCategories);
         setCategory(category || allCategories[0]._id);

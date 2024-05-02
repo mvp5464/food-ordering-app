@@ -1,9 +1,4 @@
-// YOU NEED TO START THIS SERVICE THIS IS LIKE DIFFERENT BACKEND SPECIALLY FOR WEBHOOKS (SO START IT DIFFERENTLY)
-// stripe login
-// stripe listen --forward-to localhost:3000/api/webhook // ===>>>>> THIS WILL RUN IN THE TERMINAL AND WHEN YOU CLOSE THAT TERMINAL THEN IT WILL STOP (SAME AS npm run dev/ yarn dev)
-// DONT DO ABOVE THING JUST CHANGE GOTO STRIPE WEBSITE WEBHOOK AND DON'T CHOOSE LOCAL ENV
-
-import { Order } from "@/app/models/Order";
+import { Order } from "@/app/models/db";
 import { NextRequest, NextResponse } from "next/server";
 
 const stripe = require("stripe")(process.env.STRIPE_SK);

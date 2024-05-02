@@ -16,7 +16,7 @@ export default function OrdersClientPage() {
 
   function fetchOrders() {
     setLoadingOrders(true);
-    fetch("/api/orders", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/orders").then((res) => {
       res.json().then((order) => {
         setOrders(order.reverse());
         setLoadingOrders(false);

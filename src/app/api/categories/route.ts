@@ -1,4 +1,4 @@
-import { Category } from "@/app/models/Category";
+import { Category } from "@/app/models/db";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/authOptions";

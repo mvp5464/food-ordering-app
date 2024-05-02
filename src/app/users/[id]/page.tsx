@@ -13,13 +13,11 @@ export default function EditUserPage() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch("/api/users?_id=" + id, { next: { revalidate: 3600 } }).then(
-      (res) => {
-        res.json().then((users) => {
-          setUser(users);
-        });
-      }
-    );
+    fetch("/api/users?_id=" + id).then((res) => {
+      res.json().then((users) => {
+        setUser(users);
+      });
+    });
   }, [id]);
 
   async function handleSaveButtonClick(

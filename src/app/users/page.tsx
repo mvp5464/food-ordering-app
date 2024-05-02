@@ -9,7 +9,7 @@ export default function UsersPage() {
   const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("/api/users", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/users").then((res) => {
       res.json().then((users) => {
         setUsers(users);
       });

@@ -5,7 +5,7 @@ export default function useProfile() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch("/api/profile", { next: { revalidate: 3600 } }).then((res) => {
+    fetch("/api/profile").then((res) => {
       res.json().then((data) => {
         setData(data);
         setLoading(false);
